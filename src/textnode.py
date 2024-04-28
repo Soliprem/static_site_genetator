@@ -5,9 +5,11 @@ class TextNode(object):
         self.url = url
 
     def __eg__(self, OtherNode):
-        if self.text == OtherNode.text and self.text_type == OtherNode.text_type and self.url == OtherNode.url:
-            return True
-        return False
+        return (
+            self.text_type == OtherNode.text_type
+            and self.text == OtherNode.text
+            and self.url == OtherNode.url
+        )
 
     def __repr__(self):
         return f'TextNode({self.text}, {self.text_type}, {self.url})'
