@@ -1,13 +1,13 @@
 import unittest
-from blocks import markdown_to_blocks, block_to_block_type, BlockType
+from blocks import markdown_to_blocks, block_to_block_type, BlockType, markdown_to_html_node
 
 
 class TestSplits(unittest.TestCase):
     def test1(self):
         paragraph = """this is **bolded** paragraph\n\nthis is another paragraph with *italic* text and `code` here\nthis is the same paragraph on a new line
 
-        * this is a list
-        * with items"""
+* this is a list
+* with items"""
         blocks = ["this is **bolded** paragraph",
                   "this is another paragraph with *italic* text and `code` here\nthis is the same paragraph on a new line",
                   """* this is a list\n* with items"""
@@ -33,23 +33,25 @@ class TestSplits(unittest.TestCase):
         self.assertEqual(block_to_block_type(
             paragraph), BlockType.PARAGRAPH)
 
-    # def test2(self):
-    #     paragraph = """this is **bolded** paragraph
-    #
-    #     ```
-    #     this is a code paragraph with *italic* text and stuff here
-    #     this is the same paragraph on a new line
-    #     ```
-    #
-    #     * this is a list
-    #     * with items
-    #     - more items
-    #
-    #     1. numbered list
-    #     2. more numbers"""
-    #
-    #     blocks = ["this is **bolded** paragraph",
-    #               "this is another paragraph with *italic* text and `code` here\nthis is the same paragraph on a new line",
-    #               """* this is a list\n* with items"""
-    #               ]
-    #     self.assertequal(markdown_to_blocks(paragraph), blocks)
+    def test6(self):
+        paragraph = """# this is a header paragraph
+
+```
+this is a code paragraph with 
+    indented text and stuff here
+this is the same paragraph on a new line
+```
+
+## pay attention!   
+                   * this is a list
+* with items. Even a [link](example.org) and a ![picture](~/imgs/puicsd)
+- more items
+
+1. numbered list
+2. more numbers
+
+> and finally a quote
+> block, to tie things off
+"""
+
+        print(markdown_to_html_node(paragraph))
