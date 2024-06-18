@@ -95,7 +95,8 @@ def paragraph_to_html(block):
 
 def listify(block):
     new_block = block.split("\n")
-    text_nodes = list(map(text_to_textnode, new_block))
+    stripped_new_block = list(map(lambda x: x[1:], new_block))
+    text_nodes = list(map(text_to_textnode, stripped_new_block))
     html_nodes = list(
         map(lambda x: [text_node_to_html_node(y) for y in x], text_nodes))
     children = list(map(lambda x: ParentNode("li", x), html_nodes))
