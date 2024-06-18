@@ -10,7 +10,8 @@ def split_nodes_delimiter(old_nodes: list, delimiter, text_type):
     for node in old_nodes:
         inside_delimiter = True
         if node.text_type != "text":
-            pass
+            list.append(node)
+            continue
         new_text = node.text.split(delimiter)
         for i in new_text:
             inside_delimiter = not inside_delimiter
@@ -33,6 +34,9 @@ def extract_markdown_links(text):
 def split_nodes_image(old_nodes):
     list = []
     for old_node in old_nodes:
+        if old_node.text_type != "text":
+            list.append(old_node)
+            continue
         old_text = old_node.text
         images = extract_markdown_images(old_text)
         for image_tup in images:
@@ -49,6 +53,9 @@ def split_nodes_image(old_nodes):
 def split_nodes_link(old_nodes):
     list = []
     for old_node in old_nodes:
+        if old_node.text_type != "text":
+            list.append(old_node)
+            continue
         old_text = old_node.text
         links = extract_markdown_links(old_text)
         for link_tup in links:
@@ -62,7 +69,8 @@ def split_nodes_link(old_nodes):
     return list
 
 
-def text_to_textnode(old_nodes):
+def text_to_textnode(text):
+    old_nodes = [TextNode(text, TextType.TEXT)]
     bold = split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
     italic = split_nodes_delimiter(bold, "*", TextType.ITALIC)
     codeblock = split_nodes_delimiter(italic, "`", TextType.CODE)
