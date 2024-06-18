@@ -77,7 +77,9 @@ def heading_to_html(block):
     if re.findall("^#{6} ", block):
         header = "h6"
         index = 6
-    return LeafNode(header, block[index:])
+    text_nodes = text_to_textnode(block[index:])
+    html_nodes = list(map(text_node_to_html_node, text_nodes))
+    return ParentNode(header, html_nodes)
 
 
 def quote_to_html(block):
@@ -93,21 +95,11 @@ def paragraph_to_html(block):
 
 def listify(block):
     new_block = block.split("\n")
-    print(f"new_block\n{new_block}")
     text_nodes = list(map(text_to_textnode, new_block))
-    print(f"text nodes:\n{text_nodes}")
     html_nodes = list(
         map(lambda x: [text_node_to_html_node(y) for y in x], text_nodes))
-    print(f"html nodes:\n{html_nodes}")
     children = list(map(lambda x: ParentNode("li", x), html_nodes))
     return children
-
-
-# def listify(block):
-#     new_block = block.split("\n")
-#     children = list(map(lambda x: ParentNode("li", list(
-#         map(text_node_to_html_node, list(map(text_to_textnode, new_block))))), new_block))
-#     return children
 
 
 def unordered_list_to_html(block):
