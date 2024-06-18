@@ -54,28 +54,28 @@ def block_to_block_type(block):
 
 
 def code_block_to_html(block):
-    node = LeafNode("<code>", block[3:-3])
-    return ParentNode("<pre>", node)
+    node = LeafNode("code", block[3:-3])
+    return ParentNode("pre", node)
 
 
 def heading_to_html(block):
     if re.findall("^#{1} ", block):
-        header = "<h1>"
+        header = "h1"
         index = 1
     if re.findall("^#{2} ", block):
-        header = "<h2>"
+        header = "h2"
         index = 2
     if re.findall("^#{3} ", block):
-        header = "<h3>"
+        header = "h3"
         index = 3
     if re.findall("^#{4} ", block):
-        header = "<h4>"
+        header = "h4"
         index = 4
     if re.findall("^#{5} ", block):
-        header = "<h5>"
+        header = "h5"
         index = 5
     if re.findall("^#{6} ", block):
-        header = "<h6>"
+        header = "h6"
         index = 6
     return LeafNode(header, block[index:])
 
@@ -84,26 +84,38 @@ def quote_to_html(block):
     split_block = block.split("\n")
     stripped_split_block = list(map(lambda x: x[1:], split_block))
     stripped_split_block = "\n".join(stripped_split_block)
-    return ParentNode("<blockquote>", list(map(lambda x: text_node_to_html_node(x), text_to_textnode(stripped_split_block))))
+    return ParentNode("blockquote", list(map(lambda x: text_node_to_html_node(x), text_to_textnode(stripped_split_block))))
 
 
 def paragraph_to_html(block):
-    return ParentNode("<p>", list(map(lambda x: text_node_to_html_node(x), text_to_textnode(block))))
+    return ParentNode("p", list(map(lambda x: text_node_to_html_node(x), text_to_textnode(block))))
 
 
 def listify(block):
     new_block = block.split("\n")
-    children = list(map(lambda x: ParentNode("<li>", list(
-        map(lambda x: text_node_to_html_node(x), text_to_textnode(block)))), new_block))
+    print(f"new_block\n{new_block}")
+    text_nodes = list(map(text_to_textnode, new_block))
+    print(f"text nodes:\n{text_nodes}")
+    html_nodes = list(
+        map(lambda x: [text_node_to_html_node(y) for y in x], text_nodes))
+    print(f"html nodes:\n{html_nodes}")
+    children = list(map(lambda x: ParentNode("li", x), html_nodes))
     return children
 
 
+# def listify(block):
+#     new_block = block.split("\n")
+#     children = list(map(lambda x: ParentNode("li", list(
+#         map(text_node_to_html_node, list(map(text_to_textnode, new_block))))), new_block))
+#     return children
+
+
 def unordered_list_to_html(block):
-    return ParentNode("<ul>", listify(block))
+    return ParentNode("ul", listify(block))
 
 
 def ordered_list_to_html(block):
-    return ParentNode("<il>", listify(block))
+    return ParentNode("il", listify(block))
 
 
 def markdown_to_html_node(markdown):
@@ -128,4 +140,4 @@ def markdown_to_html_node(markdown):
                 children.append(heading_to_html(block))
             case BlockType.CODE:
                 children.append(code_block_to_html(block))
-    return ParentNode("<div>", children)
+    return ParentNode("div", children)

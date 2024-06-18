@@ -1,5 +1,5 @@
 import unittest
-from blocks import markdown_to_blocks, block_to_block_type, BlockType, markdown_to_html_node
+from blocks import markdown_to_blocks, block_to_block_type, BlockType, markdown_to_html_node, listify
 from htmlnode import ParentNode, LeafNode
 
 
@@ -35,34 +35,38 @@ class TestSplits(unittest.TestCase):
             paragraph), BlockType.PARAGRAPH)
 
     def test6(self):
-        paragraph = """
-
-
-# this is a header paragraph
-
-```
-this is a code paragraph with
-    indented text and stuff here
-this is the same paragraph on a new line
-```
-
-## pay attention!
-
-                   * this is a list
-* with items. Even a [link](example.org) and a ![picture](~/imgs/puicsd)
-- more items
-
-1. numbered list
-2. more numbers
-
-a small ```dissertation``` about the *meaning* of **life**
-
-> and finally a quote
-> block, to tie things off
-
-
-"""
-
-        my_answer = markdown_to_html_node(paragraph)
-        print(my_answer.to_html)
+        #         paragraph = """
+        #
+        #
+        # # this is a header paragraph
+        #
+        # ```
+        # this is a code paragraph with
+        #     indented text and stuff here
+        # this is the same paragraph on a new line
+        # ```
+        #
+        # ## pay attention!
+        #
+        #                    * this is a list
+        # * with items. Even a [link](example.org) and a ![picture](~/imgs/puicsd)
+        # - more items
+        #
+        # 1. numbered list
+        # 2. more numbers
+        #
+        # a small ```dissertation``` about the *meaning* of **life**
+        #
+        # > and finally a quote
+        # > block, to tie things off
+        #
+        #
+        # """
+        #
+        # my_answer = markdown_to_html_node(paragraph)
+        # print(my_answer.to_html())
         # answer = ParentNode("<div>", [LeafNode("<h1>", "this is a header paragraph"), ParentNode("<pre>", LeafNode("<code>", "\nthis is a code paragraph with\n\tindented text and stuff here\nthis is the same paragraph on a new line"), LeafNode("<h2>", "pay attention!"), ParentNode("<ul>", [ParentNode("<li>", [LeafNode()])])))
+        print(listify("""- 1
+- 2, **bold**
+- 3, *italic*
+- 4"""))
