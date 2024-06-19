@@ -69,4 +69,4 @@ class TestSplits(unittest.TestCase):
         print(listify("""- 1
 - 2, **bold**
 - 3, *italic*
-- 4"""))
+- 4""", True))

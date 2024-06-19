@@ -1,7 +1,8 @@
 import unittest
 from textnode import (
     TextNode,
-    TextType
+    TextType,
+    text_node_to_html_node
 )
 
 
@@ -53,6 +54,12 @@ class TestTextNode(unittest.TestCase):
                         'https://www.boot.dev')
         self.assertEqual(
             repr(node), "TextNode(This is a text node, bold, https://www.boot.dev)")
+
+    def test_to_html_node(self):
+        maxDiff = None
+        node = TextNode("This is a bold, italic code line",
+                        TextType.CODEITALICBOLD)
+        print(text_node_to_html_node(node).to_html())
 
 
 if __name__ == "__main__":

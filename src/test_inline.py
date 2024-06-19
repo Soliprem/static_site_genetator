@@ -84,7 +84,7 @@ class TestInlineSeparator(unittest.TestCase):
         self.assertEqual(links, extract_markdown_links(text))
 
     def test7(self):
-        text = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
+        text = "This is **text** with an *italic* word and a `code block`. Also, a ***super*** and an ***```ubersuper```*** combination and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
         nodes = [
             TextNode("This is ", TextType.TEXT),
             TextNode("text", TextType.BOLD),
@@ -92,7 +92,11 @@ class TestInlineSeparator(unittest.TestCase):
             TextNode("italic", TextType.ITALIC),
             TextNode(" word and a ", TextType.TEXT),
             TextNode("code block", TextType.CODE),
+            TextNode(". Also, a ", TextType.TEXT),
+            TextNode("super", TextType.BOLDITALIC),
             TextNode(" and an ", TextType.TEXT),
+            TextNode("ubersuper", TextType.CODEITALICBOLD),
+            TextNode(" combination and an ", TextType.TEXT),
             TextNode("image", TextType.IMAGE,
                      "https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png"),
             TextNode(" and a ", TextType.TEXT),

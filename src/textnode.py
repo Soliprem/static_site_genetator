@@ -1,5 +1,5 @@
 from enum import Enum
-from htmlnode import LeafNode
+from htmlnode import LeafNode, ParentNode
 
 
 class TextNode:
@@ -31,6 +31,14 @@ class TextNode:
             return 'link'
         if text_type == TextType.IMAGE:
             return 'image'
+        if text_type == TextType.BOLDITALIC:
+            return 'bold_italic'
+        if text_type == TextType.CODEBOLD:
+            return 'code_bold'
+        if text_type == TextType.CODEITALIC:
+            return 'code_italic'
+        if text_type == TextType.CODEITALICBOLD:
+            return 'code_italic_bold'
         raise Exception('Invalid Type')
 
 
@@ -39,8 +47,12 @@ class TextType(Enum):
     BOLD = 2
     ITALIC = 3
     CODE = 4
-    LINK = 5
-    IMAGE = 6
+    BOLDITALIC = BOLD + ITALIC
+    CODEBOLD = CODE + BOLD
+    CODEITALIC = CODE + ITALIC
+    LINK = 8
+    CODEITALICBOLD = CODE + ITALIC + BOLD
+    IMAGE = 10
 
 
 def text_node_to_html_node(text_node):
@@ -51,6 +63,14 @@ def text_node_to_html_node(text_node):
             return LeafNode('b', text_node.text)
         case 'italic':
             return LeafNode('i', text_node.text)
+        case "bold_italic":
+            return ParentNode('b', LeafNode('i', text_node.text))
+        case "code_bold":
+            return ParentNode('b', LeafNode('code', text_node.text))
+        case "code_italic":
+            return ParentNode('i', LeafNode('code', text_node.text))
+        case "code_italic_bold":
+            return ParentNode('i', [ParentNode('b', LeafNode('code', text_node.text))])
         case 'code':
             return LeafNode('code', text_node.text)
         case 'link':

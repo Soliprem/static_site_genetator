@@ -93,9 +93,13 @@ def paragraph_to_html(block):
     return ParentNode("p", list(map(lambda x: text_node_to_html_node(x), text_to_textnode(block))))
 
 
-def listify(block):
+def listify(block, ordered):
+    if ordered:
+        index = 3
+    else:
+        index = 2
     new_block = block.split("\n")
-    stripped_new_block = list(map(lambda x: x[1:], new_block))
+    stripped_new_block = list(map(lambda x: x[index:], new_block))
     text_nodes = list(map(text_to_textnode, stripped_new_block))
     html_nodes = list(
         map(lambda x: [text_node_to_html_node(y) for y in x], text_nodes))
@@ -104,11 +108,11 @@ def listify(block):
 
 
 def unordered_list_to_html(block):
-    return ParentNode("ul", listify(block))
+    return ParentNode("ul", listify(block, False))
 
 
 def ordered_list_to_html(block):
-    return ParentNode("il", listify(block))
+    return ParentNode("il", listify(block, True))
 
 
 def markdown_to_html_node(markdown):
