@@ -22,6 +22,7 @@ def markdown_to_blocks(markdown):
     new_markdown = markdown.split("\n")
     new_markdown = list(map(lambda x: x.rstrip(), new_markdown))
     new_markdown = ('\n').join(new_markdown)
+    new_markdown = re.sub("\n\n\n*", "\n\n", new_markdown)
     return new_markdown.split("\n\n")
 
 
