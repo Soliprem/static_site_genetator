@@ -22,7 +22,7 @@ One cannot simply discuss *The Lord of the Rings* without acknowledging the bedr
 2. The tragic saga of the Noldor Elves
 3. The rise and fall of great kingdoms such as Gondolin and Númenor
 
-```
+```python
 print("Lord")
 print("of")
 print("the")

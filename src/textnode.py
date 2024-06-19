@@ -3,20 +3,20 @@ from htmlnode import LeafNode, ParentNode
 
 
 class TextNode:
-    def __init__(self, text, text_type, url=None):
+    def __init__(self, text, text_type, prop=None):
         self.text = text
         self.text_type = self.__assign_type__(text_type)
-        self.url = url
+        self.prop = prop
 
     def __eq__(self, other):
         return (
             self.text_type == other.text_type
             and self.text == other.text
-            and self.url == other.url
+            and self.prop == other.prop
         )
 
     def __repr__(self):
-        return f"TextNode({self.text}, {self.text_type}, {self.url})"
+        return f"TextNode({self.text}, {self.text_type}, {self.prop})"
 
     def __assign_type__(self, text_type):
         if text_type == TextType.TEXT:
@@ -74,7 +74,7 @@ def text_node_to_html_node(text_node):
         case 'code':
             return LeafNode('code', text_node.text)
         case 'link':
-            return LeafNode('a', text_node.text, {'href': text_node.url})
+            return LeafNode('a', text_node.text, {'href': text_node.prop})
         case 'image':
-            return LeafNode('img', "", {'src': text_node.url, 'alt': text_node.text})
+            return LeafNode('img', "", {'src': text_node.prop, 'alt': text_node.text})
     raise Exception(f'Invalid Type:{text_node.text_type}')

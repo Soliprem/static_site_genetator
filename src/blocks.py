@@ -25,15 +25,6 @@ def markdown_to_blocks(markdown):
     return new_markdown.split("\n\n")
 
 
-markdown_to_blocks("""This is **bolded** paragraph
-
-This is another paragraph with *italic* text and `code` here
-This is the same paragraph on a new line
-
-* This is a list
-* with items""")
-
-
 def block_to_block_type(block):
     split_block = block.split("\n")
     stripped_split_block = list(map(lambda x: x.strip(), split_block))
@@ -54,7 +45,8 @@ def block_to_block_type(block):
 
 
 def code_block_to_html(block):
-    node = LeafNode("code", block[3:-3])
+    new_block = block[3:-3].split("\n", 1)
+    node = LeafNode("code", new_block[1], {"data-lang": new_block[0]})
     return ParentNode("pre", node)
 
 

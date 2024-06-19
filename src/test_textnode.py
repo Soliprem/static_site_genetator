@@ -35,19 +35,19 @@ class TestTextNode(unittest.TestCase):
                          'https://soliprem.github.io')
         self.assertNotEqual(node, node4)
 
-    def test_eq_url(self):
+    def test_eq_prop(self):
         node = TextNode("This is a text node", TextType.BOLD,
                         'https://www.boot.dev')
         node2 = TextNode("This is a text node", TextType.BOLD,
                          'https://www.boot.dev')
-        self.assertEqual(node.url, node2.url)
+        self.assertEqual(node.prop, node2.prop)
 
-    def test_eq_url_false(self):
+    def test_eq_prop_false(self):
         node = TextNode("This is a text node", TextType.BOLD,
                         'https://www.boot.dev')
         node2 = TextNode("This is a text node", TextType.BOLD,
                          'https://soliprem.github.io')
-        self.assertNotEqual(node.url, node2.url)
+        self.assertNotEqual(node.prop, node2.prop)
 
     def test_repr(self):
         node = TextNode("This is a text node", TextType.BOLD,
