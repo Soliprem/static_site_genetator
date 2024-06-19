@@ -105,7 +105,7 @@ def unordered_list_to_html(block):
 
 
 def ordered_list_to_html(block):
-    return ParentNode("il", listify(block, True))
+    return ParentNode("ol", listify(block, True))
 
 
 def markdown_to_html_node(markdown):
