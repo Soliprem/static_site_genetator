@@ -8,4 +8,4 @@ The generator is pretty rudimentary and simple. It handles nested syntax, and it
 
 This is an example page of what can be generated
 
-![img][static/images/example.png]
+![img](static/images/example.png)
